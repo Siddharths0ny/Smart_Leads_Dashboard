@@ -24,6 +24,11 @@ export const connectDB = async (): Promise<void> => {
       // Shorten selection timeout to 2500ms so fallback triggers quickly
       await mongoose.connect(mongoURI, { serverSelectionTimeoutMS: 2500 });
     } catch (err) {
+      if (process.env.NODE_ENV === 'production') {
+        console.error('CRITICAL: Database connection failed in production mode!');
+        console.error('Please verify your MONGODB_URI and ensure Render is whitelisted in Atlas.');
+        throw err;
+      }
       console.warn('Local MongoDB server unavailable. Booting in-memory MongoDB fallback...');
       const { MongoMemoryServer } = await import('mongodb-memory-server');
       mongoMemoryServer = await MongoMemoryServer.create();
