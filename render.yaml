@@ -1,0 +1,32 @@
+services:
+  # 1. Backend API Service
+  - type: web
+    name: smart-leads-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # Render will prompt you to paste your Atlas URL
+      - key: JWT_SECRET
+        generateValue: true # Render will automatically generate a secure key
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: FRONTEND_URL
+        value: https://smart-leads-frontend.onrender.com
+
+  # 2. Frontend React Client
+  - type: web
+    name: smart-leads-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://smart-leads-backend.onrender.com/api
