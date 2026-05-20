@@ -2,7 +2,7 @@ services:
   # 1. Backend API Service
   - type: web
     name: smart-leads-backend
-    env: node
+    runtime: node
     rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: npm start
@@ -23,10 +23,10 @@ services:
   # 2. Frontend React Client
   - type: web
     name: smart-leads-frontend
-    env: static
+    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishDir: dist
+    publishPath: dist
     envVars:
       - key: VITE_API_URL
         value: https://smart-leads-backend.onrender.com/api
