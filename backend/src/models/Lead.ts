@@ -56,9 +56,6 @@ const leadSchema = new Schema<ILead>(
 );
 
 // Indexes
-// Email is unique
-leadSchema.index({ email: 1 }, { unique: true });
-
 // Composite index for filtering
 leadSchema.index({ status: 1, source: 1 });
 
